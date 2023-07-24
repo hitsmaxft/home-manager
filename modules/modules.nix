@@ -70,6 +70,7 @@ let
     ./programs/chromium.nix
     ./programs/command-not-found/command-not-found.nix
     ./programs/comodoro.nix
+    ./programs/darcs.nix
     ./programs/dircolors.nix
     ./programs/direnv.nix
     ./programs/discocss.nix
@@ -168,6 +169,7 @@ let
     ./programs/pls.nix
     ./programs/powerline-go.nix
     ./programs/pubs.nix
+    ./programs/pyenv.nix
     ./programs/pylint.nix
     ./programs/qutebrowser.nix
     ./programs/rbw.nix
@@ -310,6 +312,7 @@ let
     ./services/stalonetray.nix
     ./services/status-notifier-watcher.nix
     ./services/swayidle.nix
+    ./services/swayosd.nix
     ./services/sxhkd.nix
     ./services/syncthing.nix
     ./services/systembus-notify.nix
@@ -327,6 +330,7 @@ let
     ./services/window-managers/bspwm/default.nix
     ./services/window-managers/fluxbox.nix
     ./services/window-managers/herbstluftwm.nix
+    ./services/window-managers/hyprland.nix
     ./services/window-managers/i3-sway/i3.nix
     ./services/window-managers/i3-sway/sway.nix
     ./services/window-managers/i3-sway/swaynag.nix

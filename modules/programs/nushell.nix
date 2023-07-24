@@ -23,7 +23,7 @@ let
           defaultText = literalExpression
             "if source is defined, the content of source, otherwise empty";
           description = ''
-            Text of the nushell <filename>${name}</filename> file.
+            Text of the nushell {file}`${name}` file.
             If unset then the source option will be preferred.
           '';
         };
@@ -32,7 +32,7 @@ let
           type = types.nullOr types.path;
           default = null;
           description = ''
-            Path of the nushell <filename>${name}</filename> file to use.
+            Path of the nushell {file}`${name}` file to use.
             If the text option is set, it will be preferred.
           '';
         };
@@ -76,9 +76,8 @@ in {
       '';
       description = ''
         The configuration file to be used for nushell.
-        </para>
-        <para>
-        See <link xlink:href="https://www.nushell.sh/book/configuration.html#configuration" /> for more information.
+
+        See <https://www.nushell.sh/book/configuration.html#configuration> for more information.
       '';
     };
 
@@ -90,9 +89,24 @@ in {
       '';
       description = ''
         The environment variables file to be used for nushell.
-        </para>
-        <para>
-        See <link xlink:href="https://www.nushell.sh/book/configuration.html#configuration" /> for more information.
+
+        See <https://www.nushell.sh/book/configuration.html#configuration> for more information.
+      '';
+    };
+
+    loginFile = mkOption {
+      type = types.nullOr (linesOrSource "login.nu");
+      default = null;
+      example = ''
+        # Prints "Hello, World" upon logging into tty1
+        if (tty) == "/dev/tty1" {
+          echo "Hello, World"
+        }
+      '';
+      description = ''
+        The login file to be used for nushell upon logging in.
+
+        See <https://www.nushell.sh/book/configuration.html#configuring-nu-as-a-login-shell> for more information.
       '';
     };
 
@@ -109,6 +123,14 @@ in {
       default = "";
       description = ''
         Additional configuration to add to the nushell environment variables file.
+      '';
+    };
+
+    extraLogin = mkOption {
+      type = types.lines;
+      default = "";
+      description = ''
+        Additional configuration to add to the nushell login file.
       '';
     };
 
@@ -159,6 +181,12 @@ in {
           (mkIf (cfg.envFile != null) cfg.envFile.text)
           cfg.extraEnv
           envVarsStr
+        ];
+      })
+      (mkIf (cfg.loginFile != null || cfg.extraLogin != "") {
+        "${configDir}/login.nu".text = mkMerge [
+          (mkIf (cfg.loginFile != null) cfg.loginFile.text)
+          cfg.extraLogin
         ];
       })
     ];
